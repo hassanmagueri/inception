@@ -4,18 +4,18 @@ RUN apt update && apt upgrade -y && apt install mariadb-server mariadb-client cu
 
 # Create the required directory for the socket
 RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql && chmod -R 755 /var/lib/mysql
 
 COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY config/init_mariadb.sh /tmp
 
-# RUN service mariadb start 
+RUN service mariadb start
 
 EXPOSE 3306
 
 # RUN sh /tmp/init_mariadb.sh
 
-# CMD ["mariadbd"]
 CMD ["sh", "/tmp/init_mariadb.sh"]
 
 
