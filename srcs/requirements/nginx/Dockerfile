@@ -8,8 +8,8 @@ RUN openssl req -x509 -newkey rsa:4096 \
     -subj "/C=XX/L=CityName/O=CompanyName/CN=localhost"
 
 
-COPY ./tools/nginx.conf /etc/nginx/nginx.conf
-COPY ./tools/index.html /usr/share/nginx/html/index.html
+COPY ./config/nginx.conf /etc/nginx/nginx.conf
+COPY ./config/index.html /usr/share/nginx/html/index.html
 
 EXPOSE 80 443
 
