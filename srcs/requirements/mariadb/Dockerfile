@@ -11,17 +11,13 @@ RUN chown -R mysql:mysql /var/lib/mysql && chmod -R 755 /var/lib/mysql
 # RUN chmod -R 755 /var/lib/mysql
 
 
-COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY config/my.cnf /etc/mysql/my.cnf
+# COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY config/init_mariadb.sh /tmp
 
-# RUN service mariadb start
-
 EXPOSE 3306
 
-# RUN sh /tmp/init_mariadb.sh
-
-# ENTRYPOINT [ "/tmp/init_mariadb.sh"]
 
 CMD ["/tmp/init_mariadb.sh"]
 # CMD ["tail", "-f", "/dev/null"]
