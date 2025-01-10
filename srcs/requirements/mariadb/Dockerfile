@@ -7,8 +7,6 @@ RUN apt update && apt upgrade -y && apt install mariadb-server mariadb-client cu
 RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
 RUN chown -R mysql:mysql /var/lib/mysql && chmod -R 755 /var/lib/mysql
 
-# RUN chown -R mysql:mysql /var/lib/mysql
-# RUN chmod -R 755 /var/lib/mysql
 
 
 COPY config/my.cnf /etc/mysql/my.cnf
