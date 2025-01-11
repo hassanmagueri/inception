@@ -49,6 +49,7 @@ RUN apt update && apt install -y curl zip unzip
 
 RUN apt update && apt install -y php7.4-fpm php7.4-mysql
 
+
 RUN curl -O https://wordpress.org/latest.zip
 COPY  ./conf/init.sh /usr/bin/
 RUN chmod +x /usr/bin/init.sh
