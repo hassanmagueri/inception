@@ -1,20 +1,4 @@
 services:
-  nginx:
-    build:
-      context: /home/emagueri/inception/srcs/requirements/nginx
-    container_name: nginx
-    ports:
-      - "80:80"
-    env_file:
-      - .env
-    volumes:
-      - WordPress:/var/www/wordpress
-    depends_on:
-      - wordpress
-      - mariadb
-    networks:
-      - my_network
-
   mariadb:
     build: 
       context: /home/emagueri/inception/srcs/requirements/mariadb
@@ -22,7 +6,7 @@ services:
     ports:
       - "3306:3306"
     env_file:
-      - .env
+      - /home/emagueri/inception/srcs/.env
     volumes:
       - DB:/var/lib/mysql
     networks:
@@ -32,10 +16,11 @@ services:
     build: 
       context: /home/emagueri/inception/srcs/requirements/wordpress
     container_name: wordpress
+    
     ports:
       - "9000:9000"
     env_file:
-      - .env
+      - /home/emagueri/inception/srcs/.env
     volumes:
       - WordPress:/var/www/wordpress
     depends_on:
@@ -43,6 +28,21 @@ services:
     networks:
       - my_network
 
+  nginx:
+    build:
+      context: /home/emagueri/inception/srcs/requirements/nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    env_file:
+      - /home/emagueri/inception/srcs/.env
+    volumes:
+      - WordPress:/var/www/wordpress
+    depends_on:
+      - mariadb
+      - wordpress
+    networks:
+      - my_network
 
 networks:
   my_network:

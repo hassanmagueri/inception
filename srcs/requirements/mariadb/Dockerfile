@@ -10,7 +10,6 @@ RUN chown -R mysql:mysql /var/lib/mysql && chmod -R 755 /var/lib/mysql
 
 
 COPY config/my.cnf /etc/mysql/my.cnf
-# COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY config/init_mariadb.sh /tmp
 
@@ -18,4 +17,3 @@ EXPOSE 3306
 
 
 CMD ["/tmp/init_mariadb.sh"]
-# CMD ["tail", "-f", "/dev/null"]
