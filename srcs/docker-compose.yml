@@ -1,52 +1,66 @@
 services:
-  mariadb:
-    build: 
-      context: /home/emagueri/inception/srcs/requirements/mariadb
-    container_name: mariadb
-    ports:
-      - "3306:3306"
-    env_file:
-      - /home/emagueri/inception/srcs/.env
-    volumes:
-      - DB:/var/lib/mysql
-    networks:
-      - my_network
-      
-  wordpress:
-    build: 
-      context: /home/emagueri/inception/srcs/requirements/wordpress
-    container_name: wordpress
-    
-    ports:
-      - "9000:9000"
-    env_file:
-      - /home/emagueri/inception/srcs/.env
-    volumes:
-      - WordPress:/var/www/wordpress
-    depends_on:
-      - mariadb
-    networks:
-      - my_network
-
   nginx:
     build:
-      context: /home/emagueri/inception/srcs/requirements/nginx
+      context: ./requirements/nginx
     container_name: nginx
     ports:
       - "80:80"
     env_file:
-      - /home/emagueri/inception/srcs/.env
+      - ./.env
     volumes:
-      - WordPress:/var/www/wordpress
+      - WORDPRESS_VOLUME:/var/www/wordpress
     depends_on:
       - mariadb
       - wordpress
     networks:
-      - my_network
+      - inception_network
+
+  mariadb:
+    build: 
+      context: ./requirements/mariadb
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./.env
+    volumes:
+      - DATABASE_VOLUME:/var/lib/mysql
+    networks:
+      - inception_network
+      
+  wordpress:
+    build: 
+      context: ./requirements/wordpress
+    container_name: wordpress
+    ports:
+      - "9000:9000"
+    env_file:
+      - ./.env
+    volumes:
+      - WORDPRESS_VOLUME:/var/www/wordpress
+    depends_on:
+      - mariadb
+    networks:
+      - inception_network
+
+  redis:
+    build:
+      context: ./requirements/bonus/redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - WORDPRESS_VOLUME:/var/www/wordpress
+    depends_on:
+      - wordpress
+    env_file:
+      - ./.env
+    networks:
+      - inception_network
 
 networks:
-  my_network:
+  inception_network:
     driver: bridge
 volumes:
-  DB:
-  WordPress:
+  DATABASE_VOLUME:
+  WORDPRESS_VOLUME:
