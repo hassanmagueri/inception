@@ -4,7 +4,9 @@ services:
       context: ./requirements/nginx
     container_name: nginx
     ports:
+      - "443:443"
       - "80:80"
+      # - "443:80"
     env_file:
       - ./.env
     volumes:
@@ -53,6 +55,67 @@ services:
       - WORDPRESS_VOLUME:/var/www/wordpress
     depends_on:
       - wordpress
+    env_file:
+      - ./.env
+    networks:
+      - inception_network
+  
+  ftp:
+    build:
+      context: ./requirements/bonus/ftp
+    container_name: ftp
+    ports:
+      - "20:20"
+      - "21:21"
+      - "40000-40100:40000-40100"
+    depends_on:
+      - wordpress
+    env_file:
+      - ./.env
+    volumes:
+      - WORDPRESS_VOLUME:/home/ftpuser
+    networks:
+      - inception_network
+
+  adminer:
+    build:
+      context: ./requirements/bonus/adminer
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    networks:
+      - inception_network
+  
+  # prometheus:
+  #   image: prom/prometheus:v2.35.0
+  #   container_name: prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  #   networks:
+  #     - inception_network
+
+  # grafana:
+  #   image: grafana/grafana
+  #   container_name: grafana
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     GF_SECURITY_ADMIN_PASSWORD: "admin"
+  #   networks:
+  #     - inception_network
+
+  grafana:
+    build: 
+      context: ./requirements/bonus/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+      - "9090:9090"
+      - "9100:9100"
     env_file:
       - ./.env
     networks:
