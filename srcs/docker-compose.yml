@@ -88,26 +88,6 @@ services:
     networks:
       - inception_network
   
-  # prometheus:
-  #   image: prom/prometheus:v2.35.0
-  #   container_name: prometheus
-  #   ports:
-  #     - "9090:9090"
-  #   volumes:
-  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml
-  #   networks:
-  #     - inception_network
-
-  # grafana:
-  #   image: grafana/grafana
-  #   container_name: grafana
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     GF_SECURITY_ADMIN_PASSWORD: "admin"
-  #   networks:
-  #     - inception_network
-
   grafana:
     build: 
       context: ./requirements/bonus/grafana
@@ -120,6 +100,16 @@ services:
       - ./.env
     networks:
       - inception_network
+  
+  website:
+    build:
+      context: ./requirements/bonus/website
+    container_name: website
+    ports:
+      - "3030:3030"
+    env_file:
+      - ./.env
+  
 
 networks:
   inception_network:
