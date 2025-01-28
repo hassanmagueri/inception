@@ -1,11 +1,12 @@
 services:
   nginx:
+    restart: always
     build:
       context: ./requirements/nginx
     container_name: nginx
     ports:
       - "443:443"
-      - "80:80"
+      - "80:80" #?
       # - "443:80"
     env_file:
       - ./.env
@@ -20,6 +21,7 @@ services:
   mariadb:
     build: 
       context: ./requirements/mariadb
+    restart: always
     container_name: mariadb
     ports:
       - "3306:3306"
@@ -29,10 +31,13 @@ services:
       - DATABASE_VOLUME:/var/lib/mysql
     networks:
       - inception_network
+    secrets:
+      - db_pass
       
   wordpress:
     build: 
       context: ./requirements/wordpress
+    restart: always
     container_name: wordpress
     ports:
       - "9000:9000"
@@ -44,10 +49,24 @@ services:
       - mariadb
     networks:
       - inception_network
+    secrets:
+      - db_pass
+      - wp_admin_pass
+      - wp_user_pass
+      - ftp_pass
+      - redis_pass
+    # healthcheck:
+    #   test: ["CMD", "wp", "db", "check", "allow-root"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 30s
+
 
   redis:
     build:
       context: ./requirements/bonus/redis
+    restart: always
     container_name: redis
     ports:
       - "6379:6379"
@@ -59,10 +78,13 @@ services:
       - ./.env
     networks:
       - inception_network
+    secrets:
+      - redis_pass
   
   ftp:
     build:
       context: ./requirements/bonus/ftp
+    restart: always
     container_name: ftp
     ports:
       - "20:20"
@@ -76,10 +98,13 @@ services:
       - WORDPRESS_VOLUME:/home/ftpuser
     networks:
       - inception_network
+    secrets:
+      - ftp_pass
 
   adminer:
     build:
       context: ./requirements/bonus/adminer
+    restart: always
     container_name: adminer
     ports:
       - "8080:8080"
@@ -88,18 +113,19 @@ services:
     networks:
       - inception_network
   
-  grafana:
-    build: 
-      context: ./requirements/bonus/grafana
-    container_name: grafana
-    ports:
-      - "3000:3000"
-      - "9090:9090"
-      - "9100:9100"
-    env_file:
-      - ./.env
-    networks:
-      - inception_network
+  # grafana:
+  #   build: 
+  #     context: ./requirements/bonus/grafana
+  #   container_name: grafana
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #     - "9090:9090"
+  #     - "9100:9100"
+  #   env_file:
+  #     - ./.env
+  #   networks:
+  #     - inception_network
   
   website:
     build:
@@ -109,11 +135,35 @@ services:
       - "3030:3030"
     env_file:
       - ./.env
+    # secrets:
+    #   - db_password
   
+
+secrets:
+  wp_admin_pass:
+    file: ../secrets/wp_admin_pass
+  wp_user_pass:
+    file: ../secrets/wp_user_pass
+  db_pass:
+    file: ../secrets/db_pass
+  ftp_pass:
+    file: ../secrets/ftp_pass
+  redis_pass:
+    file: ../secrets/redis_pass
 
 networks:
   inception_network:
     driver: bridge
 volumes:
   DATABASE_VOLUME:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/database
+      o: bind
   WORDPRESS_VOLUME:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/wordpress
+      o: bind

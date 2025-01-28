@@ -9,6 +9,14 @@
 # apt-get update -y
 # apt-get install grafana -y
 
+# apt-get install -y software-properties-common
+# add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+# wget -q -O - https://packages.grafana.com/gpg.key | apt-key add -
+# apt-get update -y
+# apt-get install grafana -y
+
+
+
 cat << EOF > /etc/grafana/provisioning/dashboards/mydashboards.yaml
 apiVersion: 1
 providers:
@@ -50,9 +58,10 @@ default_home_dashboard_path = /var/lib/grafana/dashboards/dashboard.json
 EOF
 
 
+service grafana-server start
 prometheus --config.file="prometheus.yml" &
-prometheus-node-exporter &
+prometheus-node-exporter 
 # grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini & 
-/usr/share/grafana/bin/grafana server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini --packaging=deb \
-    cfg:default.paths.provisioning=/etc/grafana/provisioning cfg:default.paths.data=/var/lib/grafana \
-    cfg:default.paths.logs=/var/log/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins
+# /usr/share/grafana/bin/grafana server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini --packaging=deb \
+#     cfg:default.paths.provisioning=/etc/grafana/provisioning cfg:default.paths.data=/var/lib/grafana \
+#     cfg:default.paths.logs=/var/log/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins

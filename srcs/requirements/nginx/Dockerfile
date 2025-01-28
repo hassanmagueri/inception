@@ -1,6 +1,6 @@
-FROM debian:12.8
+FROM debian:11
 
-RUN apt update && apt upgrade -y && apt install nginx openssl curl vim systemctl -y
+RUN apt update && apt upgrade -y && apt install nginx openssl curl vim -y
 
 RUN mkdir -p /ssl
 RUN openssl req -x509 -newkey rsa:4096 \
@@ -9,7 +9,7 @@ RUN openssl req -x509 -newkey rsa:4096 \
 
 
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
-COPY ./config/index.html /usr/share/nginx/html/index.html
+# COPY ./config/index.html /usr/share/nginx/html/index.html
 
 EXPOSE 443
 # EXPOSE 80

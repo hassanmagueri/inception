@@ -1,6 +1,6 @@
-FROM debian:12.8
+FROM debian:11
 
-RUN apt update && apt upgrade -y && apt install nginx openssl curl vim systemctl -y
+RUN apt update && apt upgrade -y && apt install nginx openssl curl vim -y
 
 
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
