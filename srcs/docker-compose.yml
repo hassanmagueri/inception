@@ -111,19 +111,17 @@ services:
     networks:
       - inception_network
   
-  # grafana:
-  #   build: 
-  #     context: ./requirements/bonus/grafana
-  #   container_name: grafana
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #     - "9090:9090"
-  #     - "9100:9100"
-  #   env_file:
-  #     - ./.env
-  #   networks:
-  #     - inception_network
+  grafana:
+    build: 
+      context: ./requirements/bonus/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env
+    networks:
+      - inception_network
   
   website:
     build:
@@ -133,8 +131,6 @@ services:
       - "3030:3030"
     env_file:
       - ./.env
-    # secrets:
-    #   - db_password
   
 
 secrets:

@@ -11,7 +11,8 @@ sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 9000|' /etc/php/7.4/fpm/poo
 
 
 wp core download  --allow-root
-wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass="$(cat /run/secrets/db_pass)" --dbhost=$DB_HOST  --allow-root
+wp config create \
+    --dbname=$DB_NAME --dbuser=$DB_USER --dbpass="$(cat /run/secrets/db_pass)" --dbhost=$DB_HOST  --allow-root
 
 wp core install --url="$URL" --title="$WP_ADMIN_SITETITLE" --admin_user="$WP_ADMIN_NAME" --admin_password="$(cat /run/secrets/wp_admin_pass )" --admin_email="$WP_ADMIN_EMAIL"  --allow-root
 

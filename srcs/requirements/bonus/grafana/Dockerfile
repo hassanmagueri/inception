@@ -7,11 +7,6 @@ RUN chmod 777 /usr/bin/init_grafana.sh
 
 COPY config/prometheus.yml /
 
-# RUN apt-get install -y apt-transport-https software-properties-common wget
-# RUN mkdir -p /etc/apt/keyrings/
-# RUN wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
-# RUN echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | tee -a /etc/apt/sources.list.d/grafana.list
-# RUN echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com beta main" | tee -a /etc/apt/sources.list.d/grafana.list
 RUN apt-get update -y
 
 RUN apt-get install -y software-properties-common

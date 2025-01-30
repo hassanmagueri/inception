@@ -8,7 +8,6 @@ COPY  ./conf/init_wp.sh /usr/bin/
 RUN chmod +x /usr/bin/init_wp.sh
 RUN mkdir -p /var/www/wordpress
 
-# RUN chmod -R 755 /var/www/WordPress
 
 WORKDIR /var/www/wordpress
 EXPOSE 9000
