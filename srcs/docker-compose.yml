@@ -53,12 +53,6 @@ services:
       - wp_user_pass
       - ftp_pass
       - redis_pass
-    # healthcheck:
-    #   test: ["CMD", "wp", "db", "check", "allow-root"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 5
-    #   start_period: 30s
 
 
   redis:
@@ -110,18 +104,6 @@ services:
       - ./.env
     networks:
       - inception_network
-  
-  # grafana:
-  #   build: 
-  #     context: ./requirements/bonus/grafana
-  #   container_name: grafana
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   env_file:
-  #     - ./.env
-  #   networks:
-  #     - inception_network
   
   website:
     build:

@@ -1,1 +1,3 @@
-/trust/
+./secrets
+./srcs/.env
+./srcs/requirements/bonus/grafana
