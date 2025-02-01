@@ -4,7 +4,7 @@ RUN apt update && apt upgrade -y && apt install nginx openssl curl vim -y
 
 
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
-COPY ./config/PortfolioWebsite/ /usr/share/nginx/html/
+COPY ./config/index.html /usr/share/nginx/html/
 
 EXPOSE 3030
 

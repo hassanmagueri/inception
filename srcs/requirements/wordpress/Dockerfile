@@ -1,6 +1,5 @@
 FROM debian:11
 
-# RUN apt update && apt install -y curl vim procps redis-tools sudo
 
 RUN apt update && apt install -y php7.4-fpm php7.4-mysql mariadb-client php7.4-redis curl
 

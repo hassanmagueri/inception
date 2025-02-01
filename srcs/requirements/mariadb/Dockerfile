@@ -8,4 +8,3 @@ RUN chmod +x /usr/local/bin/init_mariadb.sh
 EXPOSE 3306
 
 CMD ["init_mariadb.sh"]
-# CMD tail -f /dev/null
