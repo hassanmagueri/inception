@@ -1,8 +1,368 @@
-8:C 30 Jan 2025 09:59:13.137 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-8:C 30 Jan 2025 09:59:13.149 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=8, just started
-8:C 30 Jan 2025 09:59:13.149 # Configuration loaded
-8:M 30 Jan 2025 09:59:13.157 * Running mode=standalone, port=6379.
-8:M 30 Jan 2025 09:59:13.159 # Server initialized
-8:M 30 Jan 2025 09:59:13.159 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
-8:M 30 Jan 2025 09:59:13.159 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
-8:M 30 Jan 2025 09:59:13.162 * Ready to accept connections
+sudo rm -rf /home/emagueri/data/database ~/data/wordpress
+sudo rm -rf /home/emagueri/data/database ~/data/database
+docker compose -f ./srcs/docker-compose.yml down -v
+mkdir -p /home/emagueri/data/database
+mkdir -p /home/emagueri/data/wordpress
+docker compose -f ./srcs/docker-compose.yml up --build
+#0 building with "default" instance using docker driver
+
+#1 [adminer internal] load build definition from Dockerfile
+#1 transferring dockerfile: 177B 0.0s done
+#1 DONE 0.0s
+
+#2 [mariadb internal] load build definition from Dockerfile
+#2 transferring dockerfile: 270B 0.0s done
+#2 DONE 0.0s
+
+#3 [cadvisor internal] load build definition from Dockerfile
+#3 transferring dockerfile: 334B done
+#3 DONE 0.1s
+
+#4 [website internal] load build definition from Dockerfile
+#4 transferring dockerfile: 243B done
+#4 DONE 0.1s
+
+#5 [website internal] load metadata for docker.io/library/debian:11
+#5 ...
+
+#6 [cadvisor internal] load metadata for docker.io/library/debian:bullseye
+#6 DONE 0.4s
+
+#7 [cadvisor internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#5 [mariadb internal] load metadata for docker.io/library/debian:11
+#5 DONE 0.5s
+
+#8 [cadvisor 1/4] FROM docker.io/library/debian:bullseye@sha256:e5bfb7364038fd100c2faebdd674145bd1bc758a57f3c67023cced99d0eff0f7
+#8 DONE 0.0s
+
+#9 [cadvisor 2/4] RUN apt update && apt upgrade -y 	&& apt install -y wget
+#9 CACHED
+
+#10 [cadvisor 3/4] RUN wget https://github.com/google/cadvisor/releases/download/v0.47.2/cadvisor-v0.47.2-linux-amd64 -O /usr/local/bin/cadvisor
+#10 CACHED
+
+#11 [cadvisor 4/4] RUN chmod +x /usr/local/bin/cadvisor
+#11 CACHED
+
+#12 [mariadb internal] load .dockerignore
+#12 transferring context: 34B done
+#12 DONE 0.1s
+
+#13 [cadvisor] exporting to image
+#13 exporting layers done
+#13 writing image sha256:b59c32f95681c97dc82081dc3b3fd3595d5b38df15a23be4a5866d818d661a25 done
+#13 naming to docker.io/library/cadvisor done
+#13 DONE 0.0s
+
+#8 [adminer 1/4] FROM docker.io/library/debian:bullseye@sha256:e5bfb7364038fd100c2faebdd674145bd1bc758a57f3c67023cced99d0eff0f7
+#8 DONE 0.0s
+
+#14 [adminer internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.1s
+
+#15 [adminer 1/4] FROM docker.io/library/debian:11@sha256:e5bfb7364038fd100c2faebdd674145bd1bc758a57f3c67023cced99d0eff0f7
+#15 DONE 0.0s
+
+#16 [website internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [website internal] load build context
+#17 transferring context: 65B done
+#17 DONE 0.1s
+
+#18 [adminer 2/2] RUN apt update && apt install -y adminer
+#18 CACHED
+
+#19 [mariadb internal] load build context
+#19 transferring context: 70B 0.0s done
+#19 DONE 0.1s
+
+#20 [adminer] exporting to image
+#20 exporting layers done
+#20 writing image sha256:b0f34f667126571ccf501d5f6d777fd27691a3e3d0ed26c26296bf4a6d9eea8f done
+#20 naming to docker.io/library/adminer done
+#20 DONE 0.0s
+
+#21 [mariadb 3/4] COPY config/init_mariadb.sh /usr/local/bin
+#21 CACHED
+
+#22 [mariadb 2/4] RUN apt update && apt upgrade -y && apt install mariadb-server mariadb-client curl vim -y
+#22 CACHED
+
+#23 [website 2/3] RUN apt update && apt upgrade -y && apt install php -y
+#23 CACHED
+
+#24 [website 3/3] COPY ./config/index.html /usr/share/nginx/html/
+#24 CACHED
+
+#25 [mariadb 4/4] RUN chmod +x /usr/local/bin/init_mariadb.sh
+#25 CACHED
+
+#26 [cadvisor] resolving provenance for metadata file
+#26 DONE 0.0s
+
+#27 [website] exporting to image
+#27 exporting layers done
+#27 writing image sha256:8155d0a0ed0fa4727f76f882d00fb2f55ba784a58c454357e2507566288be64f done
+#27 naming to docker.io/library/website done
+#27 DONE 0.0s
+
+#28 [mariadb] exporting to image
+#28 exporting layers done
+#28 writing image sha256:22147522914b001613fd0d82260e33b0b666d8bb5f95bcf5297ab071e5834302 done
+#28 naming to docker.io/library/mariadb done
+#28 DONE 0.0s
+
+#29 [adminer] resolving provenance for metadata file
+#29 DONE 0.0s
+
+#30 [website] resolving provenance for metadata file
+#30 DONE 0.0s
+
+#31 [mariadb] resolving provenance for metadata file
+#31 DONE 0.0s
+
+#32 [wordpress internal] load build definition from Dockerfile
+#32 transferring dockerfile: 305B done
+#32 DONE 0.2s
+
+#5 [wordpress internal] load metadata for docker.io/library/debian:11
+#5 DONE 0.7s
+
+#33 [wordpress internal] load .dockerignore
+#33 transferring context: 2B done
+#33 DONE 0.0s
+
+#15 [wordpress 1/6] FROM docker.io/library/debian:11@sha256:e5bfb7364038fd100c2faebdd674145bd1bc758a57f3c67023cced99d0eff0f7
+#15 DONE 0.0s
+
+#34 [wordpress internal] load build context
+#34 transferring context: 61B done
+#34 DONE 0.0s
+
+#35 [wordpress 4/6] RUN chmod +x /usr/bin/init_wp.sh
+#35 CACHED
+
+#36 [wordpress 5/6] RUN mkdir -p /var/www/wordpress
+#36 CACHED
+
+#37 [wordpress 2/6] RUN apt update && apt install -y php7.4-fpm php7.4-mysql mariadb-client php7.4-redis curl
+#37 CACHED
+
+#38 [wordpress 3/6] COPY  ./conf/init_wp.sh /usr/bin/
+#38 CACHED
+
+#39 [wordpress 6/6] WORKDIR /var/www/wordpress
+#39 CACHED
+
+#40 [wordpress] exporting to image
+#40 exporting layers done
+#40 writing image sha256:9deb2e6091ed7fb9d61383d975e3ba7d7f31dfb613eff60d2e172f9b2638ae80 done
+#40 naming to docker.io/library/wordpress done
+#40 DONE 0.0s
+
+#41 [wordpress] resolving provenance for metadata file
+#41 DONE 0.0s
+
+#42 [redis internal] load build definition from Dockerfile
+#42 transferring dockerfile: 210B done
+#42 DONE 0.0s
+
+#43 [nginx internal] load build definition from Dockerfile
+#43 transferring dockerfile: 298B done
+#43 DONE 0.0s
+
+#5 [redis internal] load metadata for docker.io/library/debian:11
+#5 ...
+
+#44 [ftp internal] load build definition from Dockerfile
+#44 transferring dockerfile: 233B done
+#44 DONE 0.0s
+
+#5 [nginx internal] load metadata for docker.io/library/debian:11
+#5 DONE 0.9s
+
+#45 [redis internal] load .dockerignore
+#45 transferring context: 2B done
+#45 DONE 0.0s
+
+#46 [nginx internal] load .dockerignore
+#46 transferring context: 34B 0.0s done
+#46 DONE 0.1s
+
+#47 [redis 2/3] RUN apt update && apt install -y redis-server
+#47 CACHED
+
+#48 [redis 3/3] WORKDIR /var/www/wordpress
+#48 CACHED
+
+#15 [nginx 1/3] FROM docker.io/library/debian:11@sha256:e5bfb7364038fd100c2faebdd674145bd1bc758a57f3c67023cced99d0eff0f7
+#15 DONE 0.0s
+
+#49 [nginx internal] load build context
+#49 DONE 0.0s
+
+#50 [redis] exporting to image
+#50 exporting layers done
+#50 writing image sha256:b878ef4a22767a3db2ea71e5613751a10ec2069820ae708761b0acfb888cb3ca done
+#50 naming to docker.io/library/redis 0.0s done
+#50 DONE 0.0s
+
+#51 [ftp internal] load .dockerignore
+#51 transferring context: 2B 0.0s done
+#51 DONE 0.1s
+
+#15 [ftp 1/3] FROM docker.io/library/debian:11@sha256:e5bfb7364038fd100c2faebdd674145bd1bc758a57f3c67023cced99d0eff0f7
+#15 DONE 0.0s
+
+#52 [ftp internal] load build context
+#52 transferring context: 566B 0.1s done
+#52 DONE 0.1s
+
+#49 [nginx internal] load build context
+#49 transferring context: 105B 0.0s done
+#49 DONE 0.2s
+
+#53 [nginx 4/5] COPY ./config/init_nginx.sh /usr/local/bin
+#53 CACHED
+
+#54 [nginx 2/5] RUN apt update && apt upgrade -y && apt install nginx openssl curl vim -y
+#54 CACHED
+
+#55 [nginx 3/5] COPY ./config/nginx.conf /etc/nginx/nginx.conf
+#55 CACHED
+
+#56 [nginx 5/5] RUN chmod +x /usr/local/bin/init_nginx.sh
+#56 CACHED
+
+#57 [ftp 2/4] RUN apt update && apt install -y vsftpd ufw ftp
+#57 CACHED
+
+#58 [nginx] exporting to image
+#58 exporting layers done
+#58 writing image sha256:9e95b282dc14afcc1a51bf839bfedf72c44a1579d679d2ed50f33a22a7673af4 done
+#58 naming to docker.io/library/nginx done
+#58 DONE 0.0s
+
+#59 [redis] resolving provenance for metadata file
+#59 DONE 0.0s
+
+#60 [ftp 3/4] COPY ./config/init_ftp.sh /usr/bin/init_ftp.sh
+#60 DONE 0.2s
+
+#61 [nginx] resolving provenance for metadata file
+#61 DONE 0.0s
+
+#62 [ftp 4/4] RUN chmod +x /usr/bin/init_ftp.sh
+#62 DONE 0.4s
+
+#63 [ftp] exporting to image
+#63 exporting layers 0.2s done
+#63 writing image sha256:5cbe4bc972c153e02e0d06640a7f8a46eb1f98475b7cc1cd6b0e36e39fd7775b
+#63 writing image sha256:5cbe4bc972c153e02e0d06640a7f8a46eb1f98475b7cc1cd6b0e36e39fd7775b done
+#63 naming to docker.io/library/ftp 0.0s done
+#63 DONE 0.2s
+
+#64 [ftp] resolving provenance for metadata file
+#64 DONE 0.0s
+Attaching to adminer, cadvisor, ftp, mariadb, nginx, redis, website, wordpress
+mariadb    | Starting MariaDB database server: mariadbd.
+redis      | 1:C 02 Feb 2025 13:20:43.202 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis      | 1:C 02 Feb 2025 13:20:43.207 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=1, just started
+redis      | 1:C 02 Feb 2025 13:20:43.207 # Configuration loaded
+redis      | 1:M 02 Feb 2025 13:20:43.214 * Running mode=standalone, port=6379.
+redis      | 1:M 02 Feb 2025 13:20:43.216 # Server initialized
+redis      | 1:M 02 Feb 2025 13:20:43.216 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis      | 1:M 02 Feb 2025 13:20:43.217 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+redis      | 1:M 02 Feb 2025 13:20:43.219 * Ready to accept connections
+wordpress  | Downloading WordPress 6.7.1 (en_US)...
+mariadb    | Stopping MariaDB database server: mariadbd.
+mariadb    | 250202 13:20:45 mysqld_safe Logging to syslog.
+mariadb    | 250202 13:20:45 mysqld_safe Starting mariadbd daemon with databases from /var/lib/mysql
+wordpress  | md5 hash verified: fae7bae13a158496ab884b6cdb0c5c03
+wordpress  | Success: WordPress downloaded.
+wordpress  | Success: Generated 'wp-config.php' file.
+wordpress  | Success: WordPress installed successfully.
+wordpress  | Success: Created user 2.
+wordpress  | Installing Redis Object Cache (2.5.4)
+wordpress  | Downloading installation package from https://downloads.wordpress.org/plugin/redis-cache.2.5.4.zip...
+wordpress  | Unpacking the package...
+wordpress  | Installing the plugin...
+wordpress  | Plugin installed successfully.
+wordpress  | Success: Installed 1 of 1 plugins.
+wordpress  | Plugin 'redis-cache' activated.
+wordpress  | Success: Activated 1 of 1 plugins.
+wordpress  | Success: Added the constant 'WP_REDIS_HOST' to the 'wp-config.php' file with the value 'redis'.
+wordpress  | Success: Added the constant 'WP_REDIS_PORT' to the 'wp-config.php' file with the value '6379'.
+wordpress  | Success: Object cache enabled.
+redis      | 1:signal-handler (1738502698) Received SIGTERM scheduling shutdown...
+redis      | 1:M 02 Feb 2025 13:24:58.791 # User requested shutdown...
+redis      | 1:M 02 Feb 2025 13:24:58.792 # Redis is now ready to exit, bye bye...
+[Kredis exited with code 0
+redis      | 1:C 02 Feb 2025 13:25:04.650 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis      | 1:C 02 Feb 2025 13:25:04.651 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=1, just started
+redis      | 1:C 02 Feb 2025 13:25:04.652 # Configuration loaded
+redis      | 1:M 02 Feb 2025 13:25:04.653 * Running mode=standalone, port=6379.
+redis      | 1:M 02 Feb 2025 13:25:04.664 # Server initialized
+redis      | 1:M 02 Feb 2025 13:25:04.668 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis      | 1:M 02 Feb 2025 13:25:04.668 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+redis      | 1:M 02 Feb 2025 13:25:04.669 * Ready to accept connections
+redis      | 1:signal-handler (1738503064) Received SIGTERM scheduling shutdown...
+redis      | 1:M 02 Feb 2025 13:31:04.742 # User requested shutdown...
+redis      | 1:M 02 Feb 2025 13:31:04.742 # Redis is now ready to exit, bye bye...
+[Kredis exited with code 0
+[Kredis exited with code 0
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+redis      | 1:C 02 Feb 2025 13:31:59.725 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis      | 1:C 02 Feb 2025 13:31:59.726 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=1, just started
+redis      | 1:C 02 Feb 2025 13:31:59.727 # Configuration loaded
+redis      | 1:M 02 Feb 2025 13:31:59.730 * Running mode=standalone, port=6379.
+redis      | 1:M 02 Feb 2025 13:31:59.730 # Server initialized
+redis      | 1:M 02 Feb 2025 13:31:59.732 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis      | 1:M 02 Feb 2025 13:31:59.733 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+redis      | 1:M 02 Feb 2025 13:31:59.733 * Ready to accept connections
+redis      | 1:signal-handler (1738503131) Received SIGTERM scheduling shutdown...
+redis      | 1:M 02 Feb 2025 13:32:11.801 # User requested shutdown...
+redis      | 1:M 02 Feb 2025 13:32:11.801 # Redis is now ready to exit, bye bye...
+[Kredis exited with code 0
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+[Kredis exited with code 2
+redis      | 1:C 02 Feb 2025 13:32:55.125 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis      | 1:C 02 Feb 2025 13:32:55.125 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=1, just started
+redis      | 1:C 02 Feb 2025 13:32:55.125 # Configuration loaded
+redis      | 1:M 02 Feb 2025 13:32:55.131 * Running mode=standalone, port=6379.
+redis      | 1:M 02 Feb 2025 13:32:55.132 # Server initialized
+redis      | 1:M 02 Feb 2025 13:32:55.133 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis      | 1:M 02 Feb 2025 13:32:55.135 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+redis      | 1:M 02 Feb 2025 13:32:55.138 * Ready to accept connections
+redis      | 1:signal-handler (1738503192) Received SIGTERM scheduling shutdown...
+redis      | 1:M 02 Feb 2025 13:33:12.783 # User requested shutdown...
+redis      | 1:M 02 Feb 2025 13:33:12.783 # Redis is now ready to exit, bye bye...
+[Kredis exited with code 0
+redis      | 1:C 02 Feb 2025 13:33:16.804 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis      | 1:C 02 Feb 2025 13:33:16.804 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=1, just started
+redis      | 1:C 02 Feb 2025 13:33:16.804 # Configuration loaded
+redis      | 1:M 02 Feb 2025 13:33:16.805 * Running mode=standalone, port=6379.
+redis      | 1:M 02 Feb 2025 13:33:16.805 # Server initialized
+redis      | 1:M 02 Feb 2025 13:33:16.805 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis      | 1:M 02 Feb 2025 13:33:16.805 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo madvise > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled (set to 'madvise' or 'never').
+redis      | 1:M 02 Feb 2025 13:33:16.805 * Ready to accept connections

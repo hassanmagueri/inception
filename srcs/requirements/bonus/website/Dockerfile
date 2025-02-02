@@ -1,11 +1,10 @@
 FROM debian:11
 
-RUN apt update && apt upgrade -y && apt install nginx openssl curl vim -y
+RUN apt update && apt upgrade -y && apt install php -y
 
 
-COPY ./config/nginx.conf /etc/nginx/nginx.conf
 COPY ./config/index.html /usr/share/nginx/html/
 
 EXPOSE 3030
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["php", "-S", "0.0.0.0:3030", "/usr/share/nginx/html/index.html"]

@@ -2,16 +2,11 @@ FROM debian:11
 
 RUN apt update && apt upgrade -y && apt install nginx openssl curl vim -y
 
-RUN mkdir -p /ssl
-
-RUN openssl req -x509 -newkey rsa:4096 \
-    -keyout /ssl/key.pem -out /ssl/cert.pem -sha256 -days 365 -nodes \
-    -subj "/C=XX/L=CityName/O=CompanyName/CN=localhost"
-
-
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
-# COPY ./config/index.html /usr/share/nginx/html/index.html
+COPY ./config/init_nginx.sh /usr/local/bin
+
+RUN chmod +x /usr/local/bin/init_nginx.sh
 
 EXPOSE 443
 
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["init_nginx.sh"] 

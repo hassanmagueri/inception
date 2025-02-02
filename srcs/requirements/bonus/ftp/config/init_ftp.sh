@@ -9,7 +9,7 @@ chmod 755 /var/run/vsftpd/empty
 
 
 # echo "IP : " $(hostname -I)
-mkdir $FTP_HOME_DIR/ftp
+mkdir -p $FTP_HOME_DIR/ftp
 
 chmod 777 -R $FTP_HOME_DIR 
 

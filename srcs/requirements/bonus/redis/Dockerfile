@@ -2,12 +2,12 @@ FROM debian:11
 
 RUN apt update && apt install -y redis-server
 
-COPY ./config/init_redis.sh /usr/local/bin/
-
-RUN chmod 777 /usr/local/bin/init_redis.sh
-
 EXPOSE 6379
+
+RUN  echo "maxmemory 256mb" >> /etc/redis/redis.conf
+
+RUN echo "maxmemory-policy allkeys-lru" >> /etc/redis/redis.conf
 
 WORKDIR /var/www/wordpress
 
-CMD ["/usr/local/bin/init_redis.sh"]
+CMD ["redis-server", "--bind", "0.0.0.0", "--protected-mode", "no"]

@@ -1,5 +1,5 @@
 #!/bin/bash
-# sleep 3
+
 mkdir -p /run/php
 
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -20,14 +20,13 @@ wp user create $WP_USER_NAME $WP_USER_EMAIL --role=$WP_USER_ROLE --user_pass="$(
 
 # redis
 
-
 wp plugin install redis-cache --allow-root
 
 wp plugin activate redis-cache --allow-root 
 
 wp config set WP_REDIS_HOST "redis" --allow-root 
 wp config set WP_REDIS_PORT 6379 --allow-root 
-wp config set WP_REDIS_PASSWORD  $(cat /run/secrets/redis_pass) --allow-root 
+# wp config set WP_REDIS_PASSWORD  $(cat /run/secrets/redis_pass) --allow-root 
 
 wp redis enable --allow-root 
 

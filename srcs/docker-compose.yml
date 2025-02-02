@@ -4,6 +4,7 @@ services:
     build:
       context: ./requirements/nginx
     container_name: nginx
+    image: nginx
     ports:
       - "443:443"
     env_file:
@@ -21,6 +22,7 @@ services:
       context: ./requirements/mariadb
     restart: always
     container_name: mariadb
+    image: mariadb
     env_file:
       - ./.env
     volumes:
@@ -35,6 +37,7 @@ services:
       context: ./requirements/wordpress
     restart: always
     container_name: wordpress
+    image: wordpress
     env_file:
       - ./.env
     volumes:
@@ -56,6 +59,7 @@ services:
       context: ./requirements/bonus/redis
     restart: always
     container_name: redis
+    image: redis
     volumes:
       - WORDPRESS_VOLUME:/var/www/wordpress
     depends_on:
@@ -72,8 +76,8 @@ services:
       context: ./requirements/bonus/ftp
     restart: always
     container_name: ftp
+    image: ftp
     ports:
-      # - "20:20"
       - "21:21"
       - "40000-40100:40000-40100"
     depends_on:
@@ -92,6 +96,7 @@ services:
       context: ./requirements/bonus/adminer
     restart: always
     container_name: adminer
+    image: adminer
     ports:
       - "8080:8080"
     env_file:
@@ -100,23 +105,35 @@ services:
       - inception_network
   
   website:
+    restart: always
     build:
       context: ./requirements/bonus/website
     container_name: website
+    image: website
     ports:
       - "3030:3030"
     env_file:
       - ./.env
+    networks:
+      - inception_network
   
   cadvisor:
+    restart: always
     build:
       context: ./requirements/bonus/cadvisor
     container_name: cadvisor
+    image: cadvisor
     ports:
       - "3131:3131"
     env_file:
       - ./.env
-  
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro #dokcer sock
+      - /sys:/sys:ro #hrdw
+      - /var/lib/docker/:/var/lib/docker:ro #containers infos
+    networks:
+      - inception_network
 
 secrets:
   wp_admin_pass:
