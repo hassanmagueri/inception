@@ -112,6 +112,8 @@ services:
     image: website
     ports:
       - "3030:3030"
+    depends_on:
+      - wordpress
     env_file:
       - ./.env
     networks:
@@ -124,17 +126,18 @@ services:
     container_name: cadvisor
     image: cadvisor
     ports:
-      - "3131:3131"
+      - "1337:8080"
     env_file:
       - ./.env
     volumes:
-      - /:/rootfs:ro
+      - /:/rootfs:ro 
       - /var/run:/var/run:ro #dokcer sock
       - /sys:/sys:ro #hrdw
       - /var/lib/docker/:/var/lib/docker:ro #containers infos
     networks:
       - inception_network
-
+    privileged: true
+       
 secrets:
   wp_admin_pass:
     file: ../secrets/wp_admin_pass

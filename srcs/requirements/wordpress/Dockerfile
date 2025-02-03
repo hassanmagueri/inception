@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:bullseye
 
 
 RUN apt update && apt install -y php7.4-fpm php7.4-mysql mariadb-client php7.4-redis curl
@@ -9,5 +9,5 @@ RUN mkdir -p /var/www/wordpress
 
 
 WORKDIR /var/www/wordpress
-EXPOSE 9000
+
 CMD ["init_wp.sh"]

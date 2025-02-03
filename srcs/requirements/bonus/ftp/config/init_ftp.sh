@@ -1,14 +1,11 @@
 #! /bin/bash
 
-useradd -m -d $FTP_HOME_DIR -s /bin/bash $FTP_USER;
+useradd -m -d $FTP_HOME_DIR $FTP_USER;
 echo "$FTP_USER:$(cat /run/secrets/ftp_pass)" | chpasswd;
 
 mkdir -p /var/run/vsftpd/empty #?
 chmod 755 /var/run/vsftpd/empty
 
-
-
-# echo "IP : " $(hostname -I)
 mkdir -p $FTP_HOME_DIR/ftp
 
 chmod 777 -R $FTP_HOME_DIR 

@@ -25,11 +25,10 @@ wp plugin install redis-cache --allow-root
 wp plugin activate redis-cache --allow-root 
 
 wp config set WP_REDIS_HOST "redis" --allow-root 
-wp config set WP_REDIS_PORT 6379 --allow-root 
-# wp config set WP_REDIS_PASSWORD  $(cat /run/secrets/redis_pass) --allow-root 
+wp config set WP_REDIS_PORT 6379 --allow-root
 
 wp redis enable --allow-root 
-
+``
 chown -R www-data:www-data /var/www/wordpress
 
 php-fpm7.4 -F

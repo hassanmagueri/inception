@@ -11,14 +11,12 @@ build:
 down:
 	docker compose -f ./srcs/docker-compose.yml down
 
-Rdata:
-	sudo rm -rf /home/emagueri/data/database ~/data/wordpress
-	sudo rm -rf /home/emagueri/data/database ~/data/database
-
 clean:
 	docker compose -f ./srcs/docker-compose.yml down
 
-kill: Rdata
+fclean: 
 	docker compose -f ./srcs/docker-compose.yml down -v
+	sudo rm -rf /home/emagueri/data/database ~/data/wordpress
+	sudo rm -rf /home/emagueri/data/database ~/data/database
 
-re: kill up
+re: fclean up

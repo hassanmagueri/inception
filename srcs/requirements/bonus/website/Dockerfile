@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:bullseye
 
 RUN apt update && apt upgrade -y && apt install php -y
 
